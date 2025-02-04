@@ -1,0 +1,71 @@
+# @package _global_
+
+defaults:
+  - base_config
+  - _self_
+
+data:
+  train_files: ["data/vizwiz/annotations/train.json"]
+  val_files: ["data/vizwiz/annotations/val.json"]
+  train_batch_size: 4
+  val_batch_size: 8
+  max_prompt_length: 256
+  max_response_length: 128
+  image_size: 480
+  num_workers: 4
+  dataset_type: "vizwiz"
+  dataset_config:
+    processor_name: "microsoft/git-base-vqav2"
+    max_prompt_length: 256
+    max_response_length: 128
+    image_size: 480
+
+model:
+  path: "microsoft/git-base-vqav2"
+  vision_tower: null
+  use_flash_attention: true
+  load_in_8bit: false
+  load_in_4bit: false
+
+trainer:
+  n_gpus_per_node: 1
+  nnodes: 1
+  save_freq: 10
+  test_freq: 10
+  total_epochs: 2
+  project_name: "TinyZero"
+  experiment_name: "vizwiz_vqa_ppo_test"
+  logger: ["wandb"]
+  val_before_train: true
+  default_hdfs_dir: null
+
+algorithm:
+  kl_ctrl:
+    kl_coef: 0.001
+
+actor_rollout_ref:
+  model:
+    path: "microsoft/git-base-vqav2"
+  actor:
+    optim:
+      lr: 1e-6
+    ppo_mini_batch_size: 2
+    ppo_micro_batch_size: 1
+  rollout:
+    log_prob_micro_batch_size: 1
+    tensor_model_parallel_size: 1
+    gpu_memory_utilization: 0.3
+    prompt_length: 256
+  ref:
+    log_prob_micro_batch_size: 1
+
+critic:
+  optim:
+    lr: 1e-5
+  model:
+    path: "microsoft/git-base-vqav2"
+  ppo_micro_batch_size: 1
+
+hydra:
+  run:
+    dir: outputs/vizwiz_vqa_ppo_test

@@ -1,0 +1,55 @@
+defaults:
+  - _self_
+
+data:
+  train_files: []
+  val_files: []
+  train_batch_size: 32
+  val_batch_size: 64
+  max_prompt_length: 256
+  max_response_length: 128
+  num_workers: 4
+
+model:
+  path: null
+  use_flash_attention: true
+  load_in_8bit: false
+  load_in_4bit: false
+
+trainer:
+  n_gpus_per_node: 1
+  nnodes: 1
+  save_freq: 100
+  test_freq: 100
+  total_epochs: 10
+  project_name: "TinyZero"
+  experiment_name: "default"
+  logger: ["wandb"]
+  val_before_train: true
+  default_hdfs_dir: null
+
+algorithm:
+  kl_ctrl:
+    kl_coef: 0.001
+
+actor_rollout_ref:
+  model:
+    path: null
+  actor:
+    optim:
+      lr: 1e-6
+    ppo_mini_batch_size: 16
+    ppo_micro_batch_size: 4
+  rollout:
+    log_prob_micro_batch_size: 4
+    tensor_model_parallel_size: 1
+    gpu_memory_utilization: 0.4
+  ref:
+    log_prob_micro_batch_size: 2
+
+critic:
+  optim:
+    lr: 1e-5
+  model:
+    path: null
+  ppo_micro_batch_size: 4

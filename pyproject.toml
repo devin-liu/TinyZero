@@ -46,6 +46,7 @@ vllm = "<=0.6.3"
 wandb = "*"
 
 # Optional dependencies (extras_require in setup.py)
+tensorboard = "^2.18.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
 yapf = "*"

@@ -7,13 +7,13 @@
 **/*.tar.gz
 **/playground
 **/wandb
+data/
+dataset/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-dataset/*
-tensorflow/my_graph/*
 .idea/
 # C extensions
 *.so
@@ -111,3 +111,5 @@ tests/e2e/toy_examples/deepspeed/synchronous/output.txt
 
 # vim
 *.swp
+poetry.lock
+.venv/

@@ -65,7 +65,7 @@ class VizWizDataset(Dataset):
         question = ann["question"]
         
         # Load and preprocess image
-        image_path = self.data_dir / "images" / self.split / image_id
+        image_path = self.data_dir / "images" / self.split / self.split / image_id
         image = Image.open(image_path).convert("RGB")
         
         # Get answer if available (not available for test split)

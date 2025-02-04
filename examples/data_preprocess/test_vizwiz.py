@@ -34,7 +34,7 @@ def test_vizwiz_sample():
     answers = [a['answer'] for a in ann['answers']]
     
     # Load and display the image
-    image_path = data_dir / "images" / "train" / image_id
+    image_path = data_dir / "images" / "train" / "train" / image_id
     image = Image.open(image_path)
     
     plt.figure(figsize=(10, 8))
